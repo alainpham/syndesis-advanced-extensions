@@ -1,0 +1,12 @@
+{
+  "name" : "syndesis-advanced-extensions",
+  "extensionId" : "extensions:syndesis-advanced-extensions",
+  "version" : "1.0.0",
+  "dependencies" : [ {
+    "type" : "MAVEN",
+    "id" : "io.syndesis.extension:extension-api:jar:1.13.0.fuse-7_10_0-00014-redhat-00001"
+  } ],
+  "uses" : 0,
+  "extensionType" : "Libraries",
+  "schemaVersion" : "v1"
+}
