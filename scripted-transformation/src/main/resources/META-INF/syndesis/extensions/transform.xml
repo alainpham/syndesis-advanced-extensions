@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes id="routes-1" xmlns="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://camel.apache.org/schema/spring https://camel.apache.org/schema/spring/camel-spring.xsd">
+    
+    <route id="scriptedtransformer">
+        <from id="scriptedtransformer-from" uri="direct:scriptedtransformer"/>
+        <choice>
+            <when>
+                <header>bodyIsJson</header>
+                <convertBodyTo type="java.lang.String"/>
+            </when>
+        </choice>
+        
+        <setHeader headerName="CamelLanguageScript">
+            <simple>
+                if (request.headers['bodyIsJson']){
+                    request.body=JSON.parse(request.body);
+                }
+                
+                ${header.script}
+
+                if (request.headers['bodyIsJson']){
+                    request.body=JSON.stringify(request.body);
+                }
+            </simple>
+        </setHeader>
+        <to id="languagetransform" uri="language:javascript:script"/>
+        <choice>
+            <when>
+                <header>bodyIsJson</header>
+                <convertBodyTo type="java.lang.String"/>
+            </when>
+        </choice>
+    </route>
+    <route>
+        <from uri="direct:parsejson"/>
+        <unmarshal>
+            <json library="Jackson"/>
+        </unmarshal>
+    </route>
+    <route>
+        <from uri="direct:renderjson"/>
+        <marshal>
+            <json library="Jackson"/>
+        </marshal>
+    </route>
+    <route>
+        <from uri="direct:tostring"/>
+        <convertBodyTo type="java.lang.String"/>
+    </route>
+</routes>

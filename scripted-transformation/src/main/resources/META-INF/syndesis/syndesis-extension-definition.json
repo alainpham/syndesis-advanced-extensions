@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "v1",
+  "name": "scriptedtransformer",
+  "description": "Do advanced transformation with scripting",
+  "extensionId": "extension.scriptedtransformer",
+  "version": "1.0.0",
+  "actions": [
+    {
+      "id": "scriptedtransformer",
+      "name": "Scripted Transformer",
+      "description": "Transform your body with advanced scripts",
+      "descriptor": {
+        "kind": "ENDPOINT",
+        "entrypoint": "direct:scriptedtransformer",
+        "inputDataShape": {
+          "kind": "any"
+        },
+        "outputDataShape": {
+          "kind": "any"
+        },
+        "propertyDefinitionSteps": [
+          {
+            "description": "Transform your body with advanced scripts",
+            "name": "Scripted Transform",
+            "properties": {
+              "bodyIsJson": {
+                "kind": "parameter",
+                "displayName": "Treat body as JSON",
+                "type": "boolean",
+                "defaultValue": true,
+                "order":1,
+                "description": "If true, body will be validated, parsed to a javascript object and after processing rendered as JSON string"
+              },
+              "script": {
+                "kind": "parameter",
+                "displayName": "Javascript content",
+                "type": "textarea",
+                "order":2,
+                "description": "Javascript for transforming content. Example : request.body['opening'] ='Two plus two is 4 minus 1 that is ' + (2 + 2 - 1) +  ' quick maths';"
+              }
+            }
+          }
+        ],
+        "resource": "classpath:META-INF/syndesis/extensions/transform.xml"
+      },
+      "tags": [
+        "transformation"
+      ],
+      "actionType": "step"
+    },
+    {
+      "id": "parsejson",
+      "name": "parsejson",
+      "description": "parsejson",
+      "descriptor": {
+        "kind": "ENDPOINT",
+        "entrypoint": "direct:parsejson",
+        "inputDataShape": {
+          "kind": "any"
+        },
+        "outputDataShape": {
+          "kind": "any"
+        },
+        "propertyDefinitionSteps": [],
+        "resource": "classpath:META-INF/syndesis/extensions/transform.xml"
+      },
+      "tags": [
+        "transformation"
+      ],
+      "actionType": "step"
+    },
+    {
+      "id": "renderjson",
+      "name": "renderjson",
+      "description": "renderjson",
+      "descriptor": {
+        "kind": "ENDPOINT",
+        "entrypoint": "direct:renderjson",
+        "inputDataShape": {
+          "kind": "any"
+        },
+        "outputDataShape": {
+          "kind": "any"
+        },
+        "propertyDefinitionSteps": [],
+        "resource": "classpath:META-INF/syndesis/extensions/transform.xml"
+      },
+      "tags": [
+        "transformation"
+      ],
+      "actionType": "step"
+    },
+    {
+      "id": "tostring",
+      "name": "tostring",
+      "description": "tostring",
+      "descriptor": {
+        "kind": "ENDPOINT",
+        "entrypoint": "direct:tostring",
+        "inputDataShape": {
+          "kind": "any"
+        },
+        "outputDataShape": {
+          "kind": "any"
+        },
+        "propertyDefinitionSteps": [],
+        "resource": "classpath:META-INF/syndesis/extensions/transform.xml"
+      },
+      "tags": [
+        "transformation"
+      ],
+      "actionType": "step"
+    }
+  ],
+  "extensionType": "Steps",
+  "dependencies": [{
+    "type": "MAVEN",
+    "id": "org.apache.camel:camel-script:jar:2.23.2.fuse-7_10_0-00020-redhat-00001"
+  },
+  {
+    "type": "MAVEN",
+    "id": "org.apache.camel:camel-jackson:jar:2.23.2.fuse-7_10_0-00020-redhat-00001"
+  }
+]
+}
